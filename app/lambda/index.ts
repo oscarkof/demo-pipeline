@@ -26,7 +26,7 @@ exports.handler = async (event: APIGatewayProxyEvent) => {
         },
       })
     );
-    body = `Put item ${requestJSON.id}`;
+    body = `Put item with id: ${requestJSON.id}`;
   } catch (err) {
     statusCode = 400;
     body = err.message;

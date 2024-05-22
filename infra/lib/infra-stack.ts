@@ -30,7 +30,7 @@ export class InfraStack extends cdk.Stack {
     const deployStage = pipeline.addStage(deploy);
 
     deployStage.addPost(new ShellStep('TestAPIGatewayEndpoint', {
-      commands: ['curl -Ssf $ENDPOINT_URL'],
+      commands: ['curl -H "Content-Type: application/json" -X POST  $ENDPOINT_URL/scan -d "{\"id\":\"12345\"}"'],
       envFromCfnOutputs: {
         ENDPOINT_URL: deploy.apgwEndpointUrl
       }

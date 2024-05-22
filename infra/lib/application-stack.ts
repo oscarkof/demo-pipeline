@@ -21,7 +21,7 @@ export class DemoInfraStack extends cdk.Stack {
     });
 
     //define lambda source location in services folder
-    const lambdaAppDir = path.resolve(__dirname, '../../services/lambda')
+    const lambdaAppDir = path.resolve(__dirname, '../../app/lambda')
 
     //create lambda function with nodejs runtime using services folder as project root.
     const lambda_backend = new aws_lambda_nodejs.NodejsFunction(this, 'lambdaFunction',
@@ -47,7 +47,7 @@ export class DemoInfraStack extends cdk.Stack {
     const endpointMethod = endpoint.addMethod("POST", new apigateway.LambdaIntegration(lambda_backend))
 
     //output api endpoint url.
-    new cdk.CfnOutput(this, "Endpoint", { value: api.url })
+    this.apgwEndpointUrl = new cdk.CfnOutput(this, "Endpoint", { value: api.url })
 
   }
 }

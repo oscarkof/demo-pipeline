@@ -9,7 +9,7 @@ export class ApplicationPipelineStage extends Stage {
     constructor(scope: Construct, id: string, props?: StageProps) {
         super(scope, id, props);        
 
-        const infraStack = new DemoInfraStack(this, 'WebService');
+        const infraStack = new DemoInfraStack(this, 'ApiRest');
         this.apgwEndpointUrl = infraStack.apgwEndpointUrl;
     }
 }

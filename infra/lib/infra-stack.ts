@@ -1,6 +1,6 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import { CodePipeline, CodePipelineSource, ShellStep } from 'aws-cdk-lib/pipelines';
+import { CodePipeline, CodePipelineSource, ShellStep, ManualApprovalStep } from 'aws-cdk-lib/pipelines';
 import { ApplicationPipelineStage } from './pipeline-app-stage';
 
 export class InfraStack extends cdk.Stack {
@@ -29,8 +29,10 @@ export class InfraStack extends cdk.Stack {
     const deploy = new ApplicationPipelineStage(this, 'Deploy');
     const deployStage = pipeline.addStage(deploy);
 
+    deployStage.addPre(new ManualApprovalStep('PromoteToProd'));
+
     deployStage.addPost(new ShellStep('TestAPIGatewayEndpoint', {
-      commands: ['curl -H "Content-Type: application/json" -X POST  $ENDPOINT_URL/scan -d "{\"id\":\"12345\",\"name\": \"Iphone 13 pro max\",\"price\":2000}"'],
+      commands: ['curl -H "Content-Type: application/json" -X POST  $ENDPOINT_URL/scan -d \'{\"id\":\"12345\",\"name\": \"Iphone 13 pro max\",\"price\":2000}\''],
       envFromCfnOutputs: {
         ENDPOINT_URL: deploy.apgwEndpointUrl
       }

@@ -3,17 +3,17 @@ import { Construct } from 'constructs';
 import { CodePipeline, CodePipelineSource, ShellStep, ManualApprovalStep } from 'aws-cdk-lib/pipelines';
 import { ApplicationPipelineStage } from './pipeline-app-stage';
 
-export class InfraStack extends cdk.Stack {
+export class InfraStack99 extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
     const synthStep = new ShellStep('Synth', {
       input: CodePipelineSource.connection('oscarkof/demo-pipeline', 'main', {
-        connectionArn: 'arn:aws:codestar-connections:us-east-1:702944629921:connection/42daae90-0ffc-4dce-9f91-308a9f2defa4', // Created using the AWS code pipeline console 
+        connectionArn: 'arn:aws:codeconnections:us-east-1:851725412753:connection/d4fbc540-c60f-4300-87a5-cb513c03428f', // Created using the AWS code pipeline console 
       }),
       commands: [
         'npm install -g aws-cdk',
-        'npm install -D esbuild', 
+        //'npm install -D esbuild', 
         'pwd', 
         'cd infra', 
         'npm run prebuild', 
@@ -21,8 +21,8 @@ export class InfraStack extends cdk.Stack {
       primaryOutputDirectory: 'infra/cdk.out'
     });
 
-    const pipeline = new CodePipeline(this, 'Pipeline', {
-      pipelineName: 'PipelineDemo',
+    const pipeline = new CodePipeline(this, 'Pipeline-user12', {
+      pipelineName: 'PipelineDemo-user12',
       synth: synthStep
     });
 
